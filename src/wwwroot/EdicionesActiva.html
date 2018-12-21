@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>Proyecto</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="main.css" rel="stylesheet">
+
+
+  <link href='css/fullcalendar.css' rel='stylesheet' />
+
+  <style>
+    .feather {
+          height: 20px !important;
+          width: 20px !important;
+        }
+      </style>
+</head>
+
+<body>
+
+    <header class="navbar navbar-expand fixed-top bg-white flex-column flex-md-row bd-navbar shadow-sm">
+        <div class="navbar-brand mr-0 mr-md-2 d-flex" aria-label="Bootstrap">
+        
+            <img src="assets/logo.svg" width="25" height="25" alt="logo">
+            <h5 class="text-center ml-3 text-primary title-left">Lagash University</h5>
+    
+        </div>
+    
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="true">
+              Juan Pernalete
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+              <a class="dropdown-item" href="login.html">cerrar Sesion</a>
+            </div>
+          </li>
+        </ul>
+      </header>
+      <!-- NAV -->
+  
+  <div class="container-fluid ">
+
+    <div id="PanelEdicion" class="row ">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar navegador mx-0 px-0">
+        <!-- seccion navegador -->
+
+
+        <div class="sidebar-sticky ">
+          <div class="row justify-content-center my-4">
+            <img src="assets/lu-logo.svg" style="width:120px;" alt="Logo">
+          </div>
+
+          <ul class="nav flex-column mt-3">
+            <li class="nav-item">
+              <a class="nav-link menuActivo" href="EdicionesActiva.html">
+                <span data-feather="check-circle"></span>
+
+                Ediciones Activas
+              </a>
+
+            <li class="nav-item">
+              <a class="nav-link  grisado" href="EdicionesPasada.html">
+                <span data-feather="clock"></span>
+                Ediciones
+              </a>
+            </li>
+
+
+            </li>
+            <li class="nav-item disabled">
+              <a class="nav-link disabled " id="inicio" href="Inicio.html">
+                <span data-feather="calendar"></span>
+                Calendario
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled " id="cronograma" href="Cronograma.html">
+                <span data-feather="book-open"></span>
+                Cronograma
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" id="postulante" href="candidatos.html">
+                <span data-feather="user"></span>
+                Candidatos
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- NAV -->
+
+    <div class="col-md-10 offset-md-2 d-none" id="SinEdiciones">
+      <div class="container activo">
+        <div class="row justify-content-center">
+          <div class="col-md-3 mt-5">
+            <img src="assets/lu-logo-gris.svg" class="inactivo" alt="">
+          </div>
+        </div>
+        <div class="row mt-5 justify-content-center">
+          <div class="text-center inactivo">
+            <h2>No hay ediciones de Lagash University activas</h2>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-12 text-center">
+            <a class="btn btn-primary btn-lg text-white" data-toggle="modal" data-target="#modalEdicion">Nueva Edicion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-10 offset-md-2 my-4 d-none" id="ediciones-activas">
+      <div class="container m-0">
+        <div class="row  my-4 justify-content-between">
+          <h2 class="text-primary ml-4">Ediciones Activas</h2>
+          <div class="mr-4 ">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalEdicion">Crear Nueva Edicion</button>
+          </div>
+        </div>
+      <div class="container m-0">
+        <table class="table" id="tabla-ediciones-activas">
+          <thead>
+            <tr class="text-secondary">
+              <th scope="col">Edicion</th>
+              <th scope="col">Fecha de Inicio</th>
+              <th scope="col">Fecha de Culminación</th>
+              <th scope="col">N° Postulante</th>
+              <th scope="col">Localidad</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="text-secondary tabla-ediciones-activas">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+
+    
+  
+
+  <!--Modal Edicion-->
+  <div class="modal fade" id="modalEdicion" tabindex="-1" role="dialog" aria-labelledby="modalEdicion" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <fieldset class="col-xs-10 col-xs-offset-1 font-weight-normal text-primary">
+            <h2>Nueva Edición</h2>
+          </fieldset>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label for="FechaInicio">Fecha de Inicio</label>
+                <input class="form-control" id="FechaInicio" readonly style="background-color:white;"/>
+                <div class="invalid-feedback errorFechaIni">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label for="FechaFin">Fecha de Culminación</label>
+                <input class="form-control" id="FechaFin" readonly style="background-color:white;"/>
+                <div class="invalid-feedback errorFechaFin">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="NumeroEdicion">Numero de edicion</label>
+                <input class="form-control" maxlength="3" id="NumeroEdicion" />
+                <div class="invalid-feedback errorNumeroEdicion">
+                  <strong>Ups!</strong> Por favor complete este campo. 
+                </div>
+                <div class="invalid-feedback EdicionRepetida" style="display:none">
+                  <strong>Cuidado!</strong> Ya existe una edicion con ese número . 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="NumeroPostulante">Número de Postulantes</label>
+                <input class="form-control" maxlength="2" id="NumeroPostulante" />
+                <div class="invalid-feedback errorNumPostulante">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="Locacion">Locación</label>
+                <select class="form-control" id="Locacion">
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="botonCrearEdicion" class="btn btn-primary">Crear Edición</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal Editar Edicion-->
+
+  <div class="modal fade" id="modalEdicionEditar" tabindex="-1" role="dialog" aria-labelledby="modalEdicionEditar"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <fieldset class="col-xs-10 col-xs-offset-1 font-weight-normal text-primary">
+            <h2>Modificar Edición</h2>
+          </fieldset>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <input type="hidden" id="IdEdicionEditar" />
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label for="FechaInicioEditar">Fecha de Inicio</label>
+                <input class="form-control" id="FechaInicioEditar" readonly style="background-color:white;"/>
+                <div class="invalid-feedback errorFechaIniEdit">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label for="FechaFinEditar">Fecha de Culminación</label>
+                <input class="form-control" id="FechaFinEditar" readonly style="background-color:white;"/>
+                <div class="invalid-feedback errorFechaFinEdit">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="NumeroEdicionEditar">Numero de edicion</label>                  
+                <input class="form-control" maxlength="3" id="NumeroEdicionEditar" />
+                <div class="invalid-feedback errorNumeroEdicion" >
+                  <strong>Ups!</strong> Por favor complete este campo. 
+                </div>
+                <div class="invalid-feedback errorEdicionRepetida" style="display:none" >
+                  <strong>Cuidado!</strong> Ya existe una edicion con ese número . 
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="NumeroPostulanteEditar">Número de Postulantes</label>
+                <input class="form-control" maxlength="2" id="NumeroPostulanteEditar" />
+                <div class="invalid-feedback errorNumPostulanteEdit">
+                  <strong>Ups!</strong> Por favor complete este campo.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input mb-3 form-group">
+                <label class="input-text" for="LocacionEditar">Locación</label>
+                <select class="form-control" id="LocacionEditar">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="botonEditarEdicion" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Icons -->
+  <script src="js/feather.min.js"></script>
+
+  <script src="js/jqBootstrapValidation.js"></script>
+
+  <link rel="stylesheet" href="js//jquery-ui.css">
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/datepicker-es.js"></script>
+
+  <!--Manejo de Hora-->
+  <script src="js/moment-with-locales.min.js"></script>
+
+  <!-- sweetaler-->
+  <script src="js/sweetalert2.all.min.js"></script>
+
+  <script src="js/edicionActiva.js"></script>
+ 
+  <script src="js/jquery.letterpic.min.js"></script>
+
+  <script src="js/generadorAvatarEdicion.js"></script>
+  <script src="js/letterpic.js"></script>
+
+</body>
+
+</html>

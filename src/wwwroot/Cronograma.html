@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Proyecto</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="main.css" rel="stylesheet">
+
+    
+    <link href='css/fullcalendar.css' rel='stylesheet' />
+
+    <style> 
+      .feather {
+        height: 20px !important;
+        width: 20px !important;
+      }
+
+      .largeError {
+        width : 400px;
+      }
+
+      input[type=text]
+
+      input:invalid {
+
+        box-shadow: 0 0 5px 1px red; 
+
+      }
+
+      input:focus:invalid {
+        outline: none;
+      }
+
+      .btn-add {
+        float: right;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+      <header class="navbar navbar-expand fixed-top bg-white flex-column flex-md-row bd-navbar shadow-sm">
+        <div class="navbar-brand mr-0 mr-md-2 d-flex" aria-label="Bootstrap">
+            <img src="assets/logo.svg" width="25" height="25" alt="logo">
+            <h5 class="text-center ml-3 text-primary title-left">Lagash University</h5>
+        </div>
+    
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="true">
+              Juan Pernalete
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+              <a class="dropdown-item" href="login.html">cerrar Sesion</a>
+            </div>
+          </li>
+        </ul>
+      </header>
+      <!-- NAV -->
+          <div class="container-fluid ">    
+            <div id="PanelEdicion" class="row ">
+              <nav class="col-md-2 d-none d-md-block bg-light sidebar navegador mx-0 px-0">                
+                <div class="sidebar-sticky ">
+                  <canvas id="Titulo" class=" rounded-circle mx-auto d-block demo mt-5" title="∞" data-userid="1" width="90px" height="90px"></canvas>
+                  
+                  <p class="font-weight-normal text-center mt-3 mb-0" id="TextoEdicion"></p>
+                  <h6 class="text-center mt-0 mb-5" id="PaisLu"></h6>
+
+                  <ul class="nav flex-column mt-3">
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="EdicionesActiva.html">
+                          <span data-feather="check-circle"></span>                      
+                          Ediciones Activas
+                      </a>                    
+                      <li class="nav-item">
+                        <a class="nav-link disabled grisado" href="EdicionesPasada.html">
+                            <span data-feather="clock"></span>
+                          Ediciones
+                        </a>
+                      </li>     
+                      <li class="nav-item disabled">
+                        <a class="nav-link disabled " id="inicio" href="Inicio.html">
+                          <span data-feather="calendar"></span>
+                          Calendario
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link menuActivo"  d="cronograma" href="Cronograma.html">
+                          <span data-feather="book-open"></span>
+                          Cronograma
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link disabled"  id="postulante" href="candidatos.html">
+                          <span data-feather="user"></span>
+                          Candidatos
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+    
+                  <!-- NAV -->
+
+
+                  <div class="col-md-10 offset-md-2">
+                    <div class="container m-0">
+                      <h2 class="text-primary my-4">Cronograma</h2> 
+                      <nav aria-label="" class="d-flex justify-content-between my-4">
+                        <ul class="pagination pagination-sm justify-content-end" id="paginacionSemanas">
+                          <li class="text-primary border border-light rounded page-item px-2">Semana</li>                    
+                        </ul>
+                        <div class="mr-3">
+                           <button class="btn btn-primary" data-toggle="modal" data-target="#ClaseModal">Crear Clase</button>
+                        </div>
+                      </nav>
+                      <div class="container p-0">
+                          <table class="table" id="table-clase">
+                            <thead>
+                                <tr class="text-secondary">
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Clase</th>
+                                    <th scope="col">Responsable Principal</th>
+                                    <th scope="col">Responsable Secundario</th>
+                                    <th scope="col">Agenda del dia</th>
+                                    <th scope="col">Temas</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-secondary">
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+      
+            <!--MODAL NUEVA CLASE-->
+            <div class="modal fade bd-example-modal-lg" id="ClaseModal" tabindex="-1" role="dialog" aria-labelledby="ClaseModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <fieldset class="col-xs-10 col-xs-offset-1">
+                        <h2 class="font-weight-normal text-primary">Nueva Clase</h2>
+                        <div class="form-horizontal">
+                          <div class="palabras">
+                            <div class="form-group">
+                              <h5 class="text-secondary">Estas por crear una nueva clase</h5>    
+                            </div>   
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form id="ClaseForm" class="needs-validation" novalidate autocomplete="off">
+                        
+                        <div class="row">
+                          
+                          <div class="col-md-6">
+                               <label for="datepicker">Fecha</label>
+                            <div class="form-group">
+                              <input class="form-control" id="datepicker" onchange="getFechas()" required readonly style="background-color:white;">
+                              <div id="errorincdate" class="invalid-feedback">
+                                  <strong>Ups!</strong> Por favor complete este campo.
+                                </div> 
+                                <div id="ErrorRange" class="invalid-feedback">
+                                  <strong>Ups!</strong> La fecha debe encontrarse en el intervalo de duración de la edición .
+                                  Por favor, ingrese una diferente 
+                                </div>
+                             </div>
+                          </div>
+      
+                          <div class="col-md-6"> 
+                            <label for="NumClase">Numero de clase</label>
+                            <div class="col-md-12 p-0 form-group">
+                              <input class="form-control col-md-3" maxlength="3" id="NumClase" required>
+                              <div id="errorincnum" class="invalid-feedback largeError">
+                                <strong>Ups!</strong> Por favor, complete este campo.
+                              </div> 
+                              <div id="errorclaserepetida" class="invalid-feedback largeError">
+                                <strong>¡Cuidado!</strong> Ya existe una clase con dicho numero.
+                              </div>
+                            </div>
+                            </div>
+        
+                        </div>
+      
+                       <div class="row ml-1">
+                        <label for="ResponsableText1">Responsable Principal </label>
+                    </div>
+      
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="ResponsableText1" maxlength="40" required>
+                          <!-- <div class="valid-tooltip"></div> -->
+                        <div id="errorincresp1" class="invalid-feedback">
+                          <strong>Ups!</strong> Por favor, complete este campo</div>
+                          <div id="erroresp1" class="invalid-feedback" style="display:none">
+                              <strong>¡Cuidado!</strong> Los campos "Responsable Principal" y "Responsable Secundario" no deben coincidir.
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-group"> 
+                        <select class="Select form-control" id="Responsable1"  onchange = "copyValue('Responsable1','ResponsableText1')"  >
+                          <option hidden>Seleccionar responsable</option>
+                        </select>
+                      </div>
+                      
+                    </div>
+      
+                    <div class="row ml-1">
+                        <label for="Responsable2">Responsable Secundario</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" id="ResponsableText2" maxlength="40"></div>
+                        <div class="col-md-6 form-group">
+                              <select class="Select form-control" id="Responsable2"  onchange = "copyValue('Responsable2','ResponsableText2')"  >
+                            <option hidden>Seleccionar responsable</option>
+                          </select>                                           
+                                                 
+                              
+                          </div>
+                        </div>
+                  
+                      <div class="form-group">
+                        <label for="Tema">Agenda del día</label> 
+                        
+                        <input type="text" maxlength="60" class="form-control" id="Tema" required>
+                        <!-- <div class="valid-tooltip"></div> -->
+                        <div id="errorinctituloclase" class="invalid-feedback">
+                          <strong>Ups!</strong> Por favor, complete este campo </div>
+                          <div id="daterror" class="invalid-feedback" style="display:none">
+                              <strong>¡Cuidado!</strong> Ya existe una clase con la fecha ingresada.
+                          </div>
+                      </div>
+      
+                      <div class="form-group">
+                        <label for="subtema">Temas de la clase 
+                    </label>
+                  
+                    <button align="right" class="btn btn-outline-secondary add btn-add" id="botonAgregar" type="button">
+                      <span style="font-size:small" data-feather="plus"></span>
+                    </button>
+                    
+                        <div id="tema" class="form-group subtema-container">
+                            <div class="input-group clonedInput">
+                              <input type="text" maxlength="100" class="form-control" name="subtema" required>
+                              <!-- <div class="valid-tooltip"></div> -->
+                              
+                            
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary remove" type="button">
+                                  <span style="font-size:small" data-feather="minus"></span>
+                                </button>
+                                <div class="invalid-feedback errorinctema" style="display:none">
+                                    <strong>Ups!</strong> Por favor, complete este campo.
+                                  </div>
+                                  <!-- DIV DEL ERROR -->
+                                  <div class="invalid-feedback canttemas" role="alert" style="display:none">
+                                      No se deben ingresar más de 15 temas.
+                                  </div>
+                              </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="botonGuardarClase" onclick="return Add();">Guardar clase</button>
+                      </div>
+                    </form>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>
+        </div>
+      
+            <!--Modal Modificar Clase-->
+            <div class="modal fade bd-example-modal-lg" id="modalModificarClase" tabindex="-1" role="dialog" aria-labelledby="ModificarClase" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <fieldset class="col-xs-10 col-xs-offset-1">
+                      <h2 class="font-weight-normal text-primary">Modificar Clase</h2>
+                      <div class="form-horizontal">
+                        <div class="palabras">
+                          <div class="form-group">
+                            <h5 class="text-secondary">Estas por modificar una clase</h5>    
+                          </div>   
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+      
+                  <div class="modal-body">
+                    <form id="formModificar" class="needs-validation" novalidate autocomplete="off">  
+      
+                      <div class="row">
+                        <div class="col-md-6">                                  
+                          <div class="form-group">                        
+                            <label for="datepickerModificar">Fecha</label>
+                            <input class="form-control" id="datepickerModificar" onchange="getFechas()" required readonly style="background-color:white;">
+                            <!-- <div class="valid-tooltip">
+                            </div> -->
+                            <div id="errorincdateMod" class="invalid-feedback">
+                              <strong>Ups!</strong> Por favor complete este campo.
+                            </div> 
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="NumClaseModificar">Numero de Clase</label>
+                            <div class="col-md-12 p-0 form-group">
+                              <input class="form-control col-md-3" id="NumClaseModificar" required>
+                              <div id="errorincnumMod" class="invalid-feedback">
+                                <strong>Ups!</strong>Por favor, complete este campo.
+                              </div> 
+                              <div id="errorclaserepetidaMod" class="invalid-feedback">
+                                <strong>¡Cuidado!</strong>Ya existe una clase con dicho numero.
+                              </div>
+                           
+                          </div>
+                            
+                          </div>
+                      </div>   
+      
+                      <div class="row ml-1">
+                        <label for="ResponsableTextModificar1">Responsable Principal </label>
+                      </div>           
+        
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ResponsableModificarText1" maxlength="100" required>                        
+                            <!-- <div class="valid-tooltip"></div> -->
+                            <div id="errorincresp1Mod" class="invalid-feedback">
+                              <strong>Ups!</strong> Por favor, complete este campo
+                            </div>
+                            <div id="erroresp1Mod" class="invalid-feedback" style="display:none">
+                              <strong>¡Cuidado!</strong> Los campos "Responsable Principal" y "Responsable Secundario" no deben coincidir.
+                            </div>                        
+                          </div>
+                        </div>
+                        <div class="col-md-6 form-group"> 
+                          <select class="SelectResponsable form-control" id="ResponsableModificar1"  onchange = "copyValue('Responsable1','ResponsableText1')">
+                            <option value="">Seleccionar responsable</option>
+                          </select>
+                        </div>                    
+                      </div>
+      
+                      <div class="row ml-1">
+                        <label for="ResponsableModificarText2">Responsable Secundario</label>
+                      </div> 
+                          
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <input type="text" class="form-control" id="ResponsableModificarText2" maxlength="100">
+                        </div>                                              
+                        <div class="col-md-6 form-group">
+                          <select class="SelectResponsable form-control" id="ResponsableModificar2"  onchange = "copyValue('Responsable2','ResponsableText2')">
+                            <option value="">Seleccionar responsable</option>                        
+                          </select>                           
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class=" col-12 form-group">
+                          <label for="TituloModificar">Agenda del día</label>
+                          <input type="text" class="form-control" id="TituloModificar" required>
+                          <!-- <div class="valid-tooltip"></div> -->
+                          <div id="errorinctituloclaseMod" class="invalid-feedback">
+                            <strong>Ups!</strong> Por favor, complete este campo 
+                          </div>
+                          <div id="daterrorMod" class="invalid-feedback" style="display:none">
+                            <strong>¡Cuidado!</strong> Ya existe una clase con la fecha ingresada.
+                          </div>
+                        </div>
+                      </div>
+      
+                      <div class="row">
+                        <div class="form-group col-12">
+                          <label for="subtema">Temas de la clase</label>
+                          <button class="btn btn-outline-secondary add btn-add" id="botonAgregarTemaMod" type="button">
+                            <span style="font-size:small" data-feather="plus"></span>
+                          </button>
+                        
+                          <div id="temaModificar" class="form-group subtema-container">
+                            <div class="input-group inputClonado-editar">
+                              <input type="text" class="form-control" name="subtemaModificar" maxlength="100" required>
+                              <div class="invalid-feedback errorinctema" style="display:none">
+                                <strong>Ups!</strong> Por favor, complete este campo.
+                              </div>
+                              <div class="invalid-feedback canttemas" role="alert" style="display:none">
+                                  No se deben ingresar más de 15 temas.
+                              </div>
+      
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary remove" type="button">
+                                  <span style="font-size:small" data-feather="minus"></span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+                      <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="botonModificarClase">Guardar clase</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>  
+              </div>
+            </div>  
+      
+      
+            <!--MODAL VISUALIZAR CLASE-->
+            <div class="modal fade " id="modalVisualizarClase" tabindex="-1" role="dialog" aria-labelledby="visualizarClase" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <fieldset class="col-xs-10 col-xs-offset-1">
+                      <h2 class="font-weight-normal text-primary">Clase: 1</h2>
+                    </fieldset>
+                  </div>
+      
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-12">                          
+                        <h5>Fecha</h5>
+                        <p id="viewFecha"></p>
+                      </div>
+                    </div>
+                    <hr>  
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h5>Resposable Principal</h5> 
+                        <p id="viewResponsablePrincipal"></p>         
+                      </div>                            
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h5>Resposable Secundario</h5>
+                        <p id="viewResponsableSecundario"></p>       
+                      </div>                            
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h5>Agenda del Día</h5>
+                        <p id="viewAgenda"></p>          
+                      </div>                            
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-12">
+                          <h5>Temas de la clase </h5>
+                          <ul id="viewTema">
+                          </ul>          
+                      </div>                            
+                    </div>                
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>  
+              </div>
+              
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="js/feather.min.js"></script>
+
+    <!-- Graphs -->
+    <script src="js/jqBootstrapValidation.js"></script>
+
+    <script src="js/moment-with-locales.min.js"></script>
+     
+    <link rel="stylesheet" href="js//jquery-ui.css">
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/datepicker-es.js"></script>
+     <!-- sweetaler-->
+   <script src="js/sweetalert2.all.min.js"></script>
+
+   <script src="js/NuevaClase.js"></script>
+   <script src="js/edicion.js"></script>
+   
+  <script src="js/jquery.letterpic.min.js"></script>
+
+  <script src="js/generadorAvatarEdicion.js"></script>
+  <script src="js/letterpic.js"></script>
+ 
+  </body>
+
+</html>

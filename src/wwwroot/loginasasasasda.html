@@ -1,0 +1,104 @@
+<html>
+    <body>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="user">User</label>
+                            <input type="text" class="form-control" id="user" placeholder="User">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="login">Login</button>
+                        <button type="button" class="btn btn-default" id="getUserdata">Get user data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function() {
+            $("#login").click(function() {
+                var userName = $("#user").val();
+                var password = $("#password").val();
+
+                $.ajax({
+                    method: "GET",
+                    url: "/api/login",
+                    headers: {
+                        userName: userName,
+                        password: password,
+                    },
+                }).done(function(token) {
+                    if(token) {
+                        setLoginCookie(userName, token);
+                        /* alert("ok"); */
+                        top.location.href="Edicione.html"
+                    } else {
+                        alert("Fallo el login");
+                    }
+                });
+            });
+
+            $("#getUserdata").click(function() {
+
+                var userData = JSON.parse(atob(getCookie("logininfo")));
+                $.ajax({
+                    method: "GET",
+                    url: "api/userinfo",
+                    headers: {
+                        User: userData.userName,
+                        Authorization: userData.token,
+                    },
+                }).done(function(data) {
+                    if(data) {
+                        alert(data);
+                    } else {
+                        alert("Fallo el request");
+                    }
+                });
+            });
+        });
+
+        function setLoginCookie(userName, token) {
+            var data = btoa(JSON.stringify({ userName: userName, token: token }));
+            document.cookie = "logininfo=" + data;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+</html>

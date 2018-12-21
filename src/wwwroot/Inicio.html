@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>Proyecto</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="main.css" rel="stylesheet">
+  <link href='css/fullcalendar.css' rel='stylesheet'>
+
+
+  <style>
+    .feather {
+      height: 20px !important;
+      width: 20px !important;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .title-left {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+    <header class="navbar navbar-expand fixed-top bg-white flex-column flex-md-row bd-navbar shadow-sm">
+      <div class="navbar-brand mr-0 mr-md-2 d-flex" aria-label="Bootstrap">
+      
+          <img src="assets/logo.svg" width="25" height="25" alt="logo">
+          <h5 class="text-center ml-3 text-primary title-left">Lagash University</h5>
+  
+      </div>
+  
+      <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+        <li class="nav-item dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="true">
+            Juan Pernalete
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+            <a class="dropdown-item" href="login.html">cerrar Sesion</a>
+          </div>
+        </li>
+      </ul>
+    </header>
+    <!-- NAV -->
+    <div class="container-fluid ">
+      <div id="PanelEdicion" class="row ">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar navegador mx-0 px-0">
+          <div class="sidebar-sticky ">
+            <canvas id="Titulo" class=" rounded-circle mx-auto d-block demo mt-5" title="∞" data-userid="1" width="90px" height="90px"></canvas>
+              <p class="font-weight-normal text-center mt-3 mb-0" id="TextoEdicion"></p>
+              <h6 class="text-center mt-0 mb-5" id="PaisLu"></h6>
+
+            <ul class="nav flex-column mt-3">
+              <li class="nav-item">
+                <a class="nav-link disabled" href="EdicionesActiva.html">
+                    <span data-feather="check-circle"></span>                  
+                  Ediciones Activas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled  grisado" href="EdicionesPasada.html">
+                    <span data-feather="clock"></span>
+                  Ediciones
+                </a>
+              </li> 
+              </li>
+                <li class="nav-item disabled">
+                  <a class="nav-link  menuActivo " id="inicio" href="Inicio.html">
+                    <span data-feather="calendar"></span>
+                    Calendario
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled  "  id="cronograma" href="Cronograma.html">
+                    <span data-feather="book-open"></span>
+                    Cronograma
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled"  id="postulante" href="candidatos.html">
+                    <span data-feather="user"></span>
+                    Candidatos
+                  </a>
+                </li>              
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <!-- NAV -->
+
+    <div class="row">
+      <div class="col-md-10 offset-md-2 pl-2">
+        <div class="my-4 justify-content-between">
+          <h2 class="text-primary ml-3">Calendario</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row offset-md-2">
+      <div class="col-2 d-none" id="cardsContainer">
+        <div class="row">
+          <!-- CARD  RESPONSABLE -->
+          <div class="card  py-0" style="width: 12rem;">
+            <div class="card-header pb-0 py-0">
+              <h6 class="mx-0 px-0"><small>Responsables</small></h6>
+            </div>
+            <!-- padre del flex -->
+            <div class="d-flex bd-highlight">
+              <!-- HIJOS CARD RESPONSABLE -->
+              <div class="p-2 flex-shrink-1 align-items-center bd-highlight" id="AvatarResponsable1">
+             
+              </div>
+              <div class="p-2 mt-2 w-100 bd-highlight">
+                <h6 class="my-0 py-0"><small id="textResponsable1"></small></h6>
+              </div>
+            </div>
+
+            <!-- 2CARD  RESPONSABLE -->
+            <div class="d-flex bd-highlight">
+              <!-- HIJOS CARD RESPONSABLE -->
+              <div class="p-2 flex-shrink-1 align-items-center bd-highlight"id="AvatarResponsable2">
+         
+              </div>
+              <div class="p-2 mt-2 w-100 bd-highlight">
+                <h6 class="my-0 py-0"><small id="textResponsable2"></small></h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD  AGENDA -->
+          <div class="card mt-4 py-0" style="width: 12rem;">
+            <div class="card-header pb-0 py-0">
+              <h6 class="mx-0 px-0"><small>Agenda</small></h6>
+            </div>
+            <!-- padre del flex -->
+
+            <!-- HIJOS CARD AGENDA -->
+            <div class="list-group" id="listTemas">
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <small>Donec id elit non mi porta.</small>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <small>Donec id elit non mi porta.</small>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <small>Donec id elit non mi porta.</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" id="calendarContainer">
+        <div id="calendar" class="fc fc-ltr"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Icons -->
+  <script src="js/feather.min.js"></script>
+  <script>
+    feather.replace()
+    $('.dropdown-toggle').dropdown()
+  </script>
+
+
+  <!-- Manejo de fechas-->
+  <script src="js/moment-with-locales.min.js"></script>
+
+  <!-- sweetaler-->
+  <script src="js/sweetalert2.all.min.js"></script>
+
+  <!-- <script src="js/edicion.js"></script> -->
+
+  <script src="js/fullcalendarEdited.js"></script>
+  <!-- <script src="js/postulantes.js"></script> -->
+
+  <script>
+    edicionActiva = sessionStorage.getItem('Edicion');
+    edicionActiva = JSON.parse(edicionActiva);
+
+    function initCalendar(clases) {
+
+  
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+      /*  className colors
+        
+      className: default(transparent), important(red), chill(pink), success(green), info(blue)
+        
+      */
+
+
+      /* initialize the external events
+      -----------------------------------------------------------------*/
+
+      $('#external-events div.external-event').each(function () {
+
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        };
+
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
+      });
+
+
+      /* initialize the calendar
+      -----------------------------------------------------------------*/
+
+      var calendar = $('#calendar').fullCalendar({
+        header: {
+          left: 'prev',
+        center: 'title',
+        right: 'next'
+       },
+        editable: true,
+        firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+        selectable: true,
+        defaultView: 'month',
+
+        axisFormat: 'h:mm',
+        columnFormat: {
+          month: 'ddd', // Mon
+          week: 'ddd d', // Mon 7
+          day: 'dddd M/d', // Monday 9/7
+          agendaDay: 'dddd d'
+        },
+        titleFormat: {
+          month: 'MMMM yyyy', // September 2009
+          week: "MMMM yyyy", // September 2009
+          day: 'MMMM yyyy' // Tuesday, Sep 8, 2009
+        },
+        allDaySlot: false,
+        selectHelper: true,
+        eventClick: function(calEvent, jsEvent, view){  
+        
+          
+          $.ajax({
+            method: "GET",
+            url: "api/Clase/" + calEvent.id,
+            contentType: "application/json"
+          })
+            .then(function(clase) {  
+              $("#textResponsable1").text('')
+              $("#AvatarResponsable1").html('')
+              $("#textResponsable2").text('')
+              $("#AvatarResponsable2").html('')
+
+              $("#textResponsable1").text(clase.responsable1.nombreyApellido)
+              $(".MiniAvatar").letterpic()
+
+              if (clase.responsable2) {
+                $("#textResponsable2").text(clase.responsable2.nombreyApellido)
+                $("#AvatarResponsable2").html('<canvas class="rounded-circle mx-auto d-block MiniAvatar" title="'+clase.responsable2.nombreyApellido+'" width="50" height="50"> </canvas>')
+              }
+       
+              $("#AvatarResponsable1").html('<canvas class="rounded-circle mx-auto d-block MiniAvatar" title="'+clase.responsable1.nombreyApellido+'" width="50" height="50"> </canvas>')
+              
+              var html = '';
+              for (var i = 0; i < clase.temas.length; i++) {
+                html += '<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">' +
+                          '<small>' + clase.temas[i].tituloTema + '</small>' +
+                        '</a>';
+              }
+
+              $("#listTemas").html(html);
+
+              $("#cardsContainer").removeClass("d-none")
+            
+              $("#calendarContainer").removeClass("col-12").addClass("col-10")
+              
+              $('#calendar').fullCalendar('destroy')
+
+              initCalendar(clases)
+
+            })
+            
+
+        },
+     
+        events: clases,
+        eventColor: '#1e39e0',
+        textColor: '#1e39e0',
+      
+
+      });
+      $(".MiniAvatar").letterpic({
+    colors: ["#3333CC", "#F6F6F8", "#222", "#333"],
+    font: "Tahoma",
+    fontColor: "#FFFFFF",
+    fontSize: 0.3
+  });
+  // var serialized = JSON.stringify(events)
+      // $.ajax({
+      //   url: '',
+      //   method: 'POT',
+      //   data: serialized,
+      // });
+    }
+
+
+
+
+
+    $.ajax({
+      method: "GET",
+      url: "/api/Clase/FechasCalendario/" + edicionActiva.idEdicion,
+      contentType: "application/json"
+    })
+      .then(function (data) {
+   
+        $(".MiniAvatar").letterpic()
+        initCalendar(data);
+        
+      })
+   
+
+
+  </script>
+  <style>
+    #wrap {
+      width: auto;
+      margin: 0 auto;
+    }
+
+    #external-events {
+      float: left;
+      width: 150px;
+      padding: 0 10px;
+      text-align: left;
+    }
+
+    #external-events h4 {
+      font-size: 16px;
+      margin-top: 0;
+      padding-top: 1em;
+    }
+
+    .external-event {
+      /* try to mimick the look of a real event */
+      margin: 10px 0;
+      padding: 2px 4px;
+      background: #3366CC;
+      color: #fff;
+      font-size: .85em;
+      cursor: pointer;
+    }
+
+    #external-events p {
+      margin: 1.5em 0;
+      font-size: 11px;
+      color: #666;
+    }
+
+    #external-events p input {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #calendar {
+      /* 		float: right; */
+      margin: 0 auto;
+      width: auto;
+      background-color: #FFFFFF;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px #C3C3C3;
+    }
+  </style>
+
+  <script src="js/jquery.letterpic.min.js"></script>
+
+  <script src="js/generadorAvatarEdicion.js"></script>
+  <script src="js/letterpic.js"></script>
+</body>
+
+</html>

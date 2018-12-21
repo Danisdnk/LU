@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="loginEstilos/Normalize.css">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container ">
+        <div class="row justify-content-center">
+            <!-- Logo Start -->
+            <div class="col-xs col-md-6 col-lg-6">
+                <img class="logoBrand " alt="logo-lagash">
+            </div>
+            <!-- Logo End-->
+            <div class="col-xs  align-self-center col-lg-6 ">
+                <!-- Ingreso Start -->
+                <form action="POST" id="formularioLogin" class="form-login">
+                    <h1>LU BackOffice</h1><br>
+                    <input id="user" class="campo" type="text" placeholder="User"><br>
+                    <input id="password" class="campo" type="password" placeholder="Password">
+                    <div class="col rf">
+                        <input class="check" type="checkbox"><label>Remember me</label>
+                        <a href="#">Forgot password</a><br><input type="button" id="login" value="login" class="ingresar" />
+                    </div>
+                </form>
+                <!-- Ingreso End -->
+            </div>
+        </div>
+
+    </div>
+    <script src="js/validacion.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+
+
+       
+            $("#login").click(function () {
+                var userName = $("#user").val();
+                var password = $("#password").val();
+
+                $.ajax({
+                    method: "GET",
+                    url: "/api/login",
+                    headers: {
+                        userName: userName,
+                        password: password,
+                    },
+                }).done(function (token) {
+                    if (token) {
+                        setLoginCookie(userName, token);
+
+                        top.location.href = 'EdicionesActiva.html';
+                        /*  
+                        alert("ok"); */
+                    } else {
+                        alert("Fallo el login");
+
+                    }
+                    $('#loading').hide();
+                        $("#message").html(data);
+                       
+                });
+            });
+
+            $("#getUserdata").click(function () {
+
+                var userData = JSON.parse(atob(getCookie("logininfo")));
+                $.ajax({
+                    method: "GET",
+                    url: "api/userinfo",
+                    headers: {
+                        User: userData.userName,
+                        Authorization: userData.token,
+                    },
+                }).done(function (data) {
+                    if (data) {
+                        alert(data);
+                    } else {
+                        alert("Fallo el request");
+                    }
+                });
+            });
+        });
+
+        function setLoginCookie(userName, token) {
+            var data = btoa(JSON.stringify({ userName: userName, token: token }));
+            document.cookie = "logininfo=" + data;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+
+    </script>
+</body>
+
+</html>

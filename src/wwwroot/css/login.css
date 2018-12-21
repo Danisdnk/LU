@@ -1,0 +1,125 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+label,
+a {
+    font-size: 0.85em;
+}
+
+.ingresar {
+    height: 35px;
+    width: 140px;
+    border: none;
+    background-color: #334CEA;
+    color: #ffffff;
+    border-radius: 3px;
+}
+
+.ingresar:hover {
+    background-color: #4682B4;
+    transition-duration: .7s;
+    cursor: pointer;
+}
+
+a {
+    color: #334CEA;
+    text-decoration: none;
+}
+
+/* FIN  */
+
+.campo {
+    width: 250px;
+    margin: 5px;
+    border: none;
+    padding: 5px;
+    border-bottom: 2px solid #CCCCCC;
+}
+.rf{
+    padding: 0px;
+}
+.rf > .check{
+    margin-top: 0.7vh;
+}
+.rf >.check,label{
+    float: left;
+}
+.rf > a{
+    float: right;
+}
+/* RESPONSIVE */
+
+
+/* Small devices (landscape phones, 320px and up)*/
+@media (min-width: 320px) {
+    h1 {
+        text-align: center;
+    }
+
+    img { content: url(../assets/Lagash_azul_64.png);}
+
+    .col-xs,
+    .col-sm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .campo{
+        display: block;
+        margin: auto;
+    }
+
+    .col {
+        padding-top: 20px;
+        align-self: center;
+    }
+
+    .ingresar {
+        display: block;
+        margin: auto;
+        margin-top: 10px;
+
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    img {content: url(../assets/Lagash_azul/Lagash_azul_64.png);}
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    img {
+        content: url(../assets/Lagash_azul/Lagash_azul_128.png);
+    }
+    .container-fluid{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .container-fluid {
+        display: flex;
+        justify-content: space-between;
+    }
+    img {
+        content: url(../assets/Lagash_azul/Lagash_azul_128.png);
+    }
+}
+
+

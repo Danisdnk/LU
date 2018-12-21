@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>Proyecto</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="main.css" rel="stylesheet">
+
+
+  <link href='css/fullcalendar.css' rel='stylesheet' />
+
+  <style>
+    .feather {
+        height: 20px !important;
+        width: 20px !important;
+      }
+ 
+      h5 {
+        color : rgba(17, 16, 16, 0.63);
+      }
+
+      hr {
+        height : 20px;
+      }
+
+      .DoubleError {
+        width: 400px;
+      }
+
+      .invisible { visibility : hidden }
+
+      input[type=text]
+
+      input:invalid {
+        box-shadow: 0 0 5px 1px red;
+      }
+
+      input:focus:invalid {
+        outline: none;
+      }
+      
+  </style>
+</head>
+
+<body>
+  <header class="navbar navbar-expand fixed-top bg-white flex-column flex-md-row bd-navbar shadow-sm">
+    <div class="navbar-brand mr-0 mr-md-2 d-flex" aria-label="Bootstrap">
+      <img src="assets/logo.svg" width="25" height="25" alt="logo">
+      <h5 class="text-center ml-3 text-primary title-left">Lagash University</h5>
+    </div>
+
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+      <li class="nav-item dropdown">
+        <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="true">
+          Juan Pernalete
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+          <a class="dropdown-item" href="login.html">cerrar Sesion</a>
+        </div>
+      </li>
+    </ul>
+  </header>
+  <!-- NAV -->
+  <div class="container-fluid ">
+    <div id="PanelEdicion" class="row ">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar navegador mx-0 px-0">
+        
+        <div class="sidebar-sticky ">
+          <canvas id="Titulo" class=" rounded-circle mx-auto d-block demo mt-5" title="∞" data-userid="1" width="90px" height="90px"></canvas>
+                  
+          <p class="font-weight-normal text-center mt-3 mb-0" id="TextoEdicion"></p>
+          <h6 class="text-center mt-0 mb-5" id="PaisLu"></h6>
+
+
+          <ul class="nav flex-column mt-3">
+            <li class="nav-item">
+              <a class="nav-link disabled" href="EdicionesActiva.html">
+                <span data-feather="check-circle"></span>
+                Ediciones Activas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled grisado" href="EdicionesPasada.html">
+                <span data-feather="clock"></span>
+                Ediciones
+              </a>
+            </li>
+
+            <li class="nav-item disabled">
+              <a class="nav-link disabled " id="inicio" href="Inicio.html">
+                <span data-feather="calendar"></span>
+                Calendario
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled " id="cronograma" href="Cronograma.html">
+                <span data-feather="book-open"></span>
+                Cronograma
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  menuActivo" id="postulante" href="candidatos.html">
+                <span data-feather="user"></span>
+                Candidatos
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- NAV -->
+
+    <div class="col-md-10 offset-md-2 my-4">
+      <div class="container m-0">
+        <div class="row">
+          <div class="col-md-10">
+            <h2 class="text-primary">Candidatos</h2> 
+          </div>
+          <div class="col-md-2">
+            <br>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Añadir candidato</button>
+          </div>
+        </div>
+        <br>
+        <div class="container">
+          <div class="row"  id="ContenedorPadreFicha"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---Modal Añadir candidato-->
+  <div class="modal fade bd-example-modal-lg" id="CandidateModal" tabindex="-1" role="dialog" aria-labelledby="CandidateModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <fieldset class="col-xs-10 col-xs-offset-1">
+            <h2 id="newCandidate1" class="font-weight-normal text-primary">Añadir Candidato</h2>
+            <div class="form-horizontal">
+              <div class="palabras">
+                <div class="form-group">
+                  <h5 id="newCandidate2" class="text-secondary">Estas por agregar un candidato a la edición</h5>    
+                </div>   
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-body" >
+          <div class="row">
+            <div class="col-md-12">
+              <form id="candform">
+                <h5></h5>
+                <div> 
+                  <h5>Datos de indentificación</h5>
+                  <hr>
+              </div>
+
+              <div class="row">        
+                <div class="col-md-3 ">
+                  <div class="form-group">
+                    <label for="Fullname">Nombre completo</label>
+                    <input type="text" maxlength="50" class="form-control" id="Fullname">
+                    <div id="incFullname" class="invalid-feedback" style:"display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="DNI">N° de documento</label>
+                    <input type="text" maxlength="20" class="form-control" id="DNI">
+                    <div id="incIdCard" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                    <div id="RepeatedCandidate" class="invalid-feedback" style="display:none">
+                      <strong>Cuidado!</strong> Ya existe un candidato con ese número de documento.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="Role">Rol</label>
+                  <select id="Role" class="custom-select custom-select-xs mb-3 .opts">
+                    <option value = "">Seleccionar Rol</option>
+                    <option value="FrontEnd">Frontend</option>
+                    <option value="BackEnd">Backend</option>
+                    <option value="FullStack">FullStack</option>
+                  </select>
+                  <div id="incRole" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, seleccione un Rol.
+                  </div>
+                </div>        
+              </div>
+
+              <h5></h5>
+              <div> 
+                <h5>Datos de domicilio</h5>
+                <hr>
+              </div>
+              <div class="row">                   
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Street">Calle</label>
+                    <input type="text" maxlength="40" class="form-control" id="Street">
+                    <div id="incStreet" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="StreetNumber">N° de calle</label>
+                    <input type="text" maxlength="10" class="form-control" id="StreetNumber">
+                    <div id="incStNumber" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Location">Localidad</label>
+                    <input type="text" maxlength="40" class="form-control" id="Location">
+                    <div id="incLoc" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="CP">Codigo Postal</label>
+                    <input type="text" maxlength="20" class="form-control" id="CP">
+                    <div id="incCP" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>            
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Department">Departamento</label>
+                    <input type="text" maxlength="5" class="form-control" id="Department">
+                    <div id="incDepOrFloor" class="DoubleError invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete los dos campos : "Departamento" y "Piso". 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Floor">Piso</label>
+                    <input type="text" maxlength="1" class="form-control" id="Floor">
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Province">Provincia</label>
+                    <input type="text" maxlength="30" class="form-control" id="Province">
+                    <div id="incProv" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group"> 
+                    <div class="invisible">
+                      <label for="Country">Pais</label>
+                    </div>
+                    <select class="Select form-control" id="Country">
+                      <option value="">Seleccionar Pais</option>
+                    </select>
+                    <div id="incCountry" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, seleccione un pais.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h5></h5>
+              <div> 
+                <h5>Contacto</h5>
+                <hr>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="Telephone">Telefono</label>
+                      <input type="text" maxlength="20" class="form-control" id="Telephone">
+                      <div id="incTel" class="invalid-feedback" style="display:none">
+                        <strong>Ups!</strong> Por favor, complete este campo.
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Email">Correo electrónico</label>
+                    <input type="text" maxlength="40" class="form-control" id="Email">
+                    <div id="incEmail" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, complete este campo.
+                    </div>
+                    <div id="invalidEmail" class="invalid-feedback" style="display:none">
+                      <strong>Ups!</strong> Por favor, ingrese una dirección de Email válida.
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="LinkedIn">LinkedIn</label>
+                    <input type="text" maxlength="60" class="form-control" id="LinkedIn">
+                  </div>
+                  <div id="invalidLinkedIn" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, ingrese una dirección de LinkedIn válida.
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="GitHub">GitHub</label>
+                    <input type="text" maxlength="60" class="form-control" id="GitHub">
+                  </div>
+                  <div id="invalidGithub" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, ingrese una dirección de Github válida.
+                  </div>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="Team">N° de Equipo</label>
+                    <input type="text" maxlength="2" class="form-control" id="Team">
+                  </div>
+                  <br>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="buttonAddPostulante" onclick="Add();">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Modificar Clase-->
+
+<div class="modal fade bd-example-modal-lg" id="CandidateModalModif" tabindex="-1" role="dialog" aria-labelledby="CandidateModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fieldset class="col-xs-10 col-xs-offset-1">
+          <h2 id="newCandidate1" class="font-weight-normal text-primary">Modificar datos del candidato</h2>
+          <div class="form-horizontal">
+            <div class="palabras">
+              <div class="form-group">
+                <h5 id="newCandidate2" class="text-secondary">Estas por actualizar los datos de un candidato</h5>    
+              </div>   
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="modal-body" >
+        <div class="row">
+          <div class="col-md-12">
+            <form id="candformmodif">
+            <h5></h5>
+            <div> 
+                <h5>Datos de indentificación</h5>
+                <hr>
+            </div>
+
+            <div class="row">                
+              <div class="col-md-3 ">
+                <div class="form-group">
+                  <label for="FullnameModif">Nombre completo</label>
+                  <input type="text" maxlength="50" class="form-control" id="FullnameModif">
+                  <div id="incFullnameModif" class="invalid-feedback" style:"display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="DNIModif">N° de documento</label>
+                  <input type="text" maxlength="20" class="form-control" id="DNIModif">
+                  <div id="incIdCardModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                  <div id="RepeatedCandidate" class="invalid-feedback" style="display:none">
+                    <strong>Cuidado!</strong> Ya existe un candidato con ese número de documento.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="Role">Rol</label>
+                <select id="RoleModif" class="custom-select custom-select-xs mb-3 .opts">
+                  <option value = "">Seleccionar Rol</option>
+                  <option value="FrontEnd">Frontend</option>
+                  <option value="BackEnd">Backend</option>
+                  <option value="FullStack">FullStack</option>
+                </select>
+                <div id="incRoleModif" class="invalid-feedback" style="display:none">
+                  <strong>Ups!</strong> Por favor, seleccione un Rol.
+                </div>
+              </div>            
+            </div>
+
+            <h5></h5>
+            <div> 
+                <h5>Datos de domicilio</h5>
+                <hr>
+            </div>
+
+            <div class="row">                   
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="StreetModif">Calle</label>
+                  <input type="text" maxlength="40" class="form-control" id="StreetModif">
+                  <div id="incStreetModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="StreetNumberModif">N° de calle</label>
+                  <input type="text" maxlength="10" class="form-control" id="StreetNumberModif">
+                  <div id="incStNumberModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="LocationModif">Localidad</label>
+                  <input type="text" maxlength="40" class="form-control" id="LocationModif">
+                  <div id="incLocModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="CPModif">Codigo Postal</label>
+                  <input type="text" maxlength="20" class="form-control" id="CPModif">
+                  <div id="incCPModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>            
+            </div>
+
+            <div class="row">              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="DepartmentModif">Departamento</label>
+                  <input type="text" maxlength="5" class="form-control" id="DepartmentModif">
+                  <div id="incDepOrFloorModif" class="DoubleError invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete los dos campos : "Departamento" y "Piso". 
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="FloorModif">Piso</label>
+                  <input type="text" maxlength="2" class="form-control" id="FloorModif">
+                </div>
+              </div>
+            
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="ProvinceModif">Provincia</label>
+                  <input type="text" maxlength="30" class="form-control" id="ProvinceModif">
+                  <div id="incProvModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group"> 
+                  <div class="invisible">
+                    <label for="CountryModif">Pais</label>
+                  </div>
+                  <select class="Select form-control" id="CountryModif">
+                    <option value="">Seleccionar Pais</option>
+                  </select>
+                  <div id="incCountryModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, seleccione un pais.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h5></h5>
+            <div> 
+              <h5>Contacto</h5>
+              <hr>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="TelephoneModif">Telefono</label>
+                  <input type="text" maxlength="20" class="form-control" id="TelephoneModif">
+                  <div id="incTelModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="EmailModif">Correo electrónico</label>
+                  <input type="text" maxlength="40" class="form-control" id="EmailModif">
+                  <div id="incEmailModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, complete este campo.
+                  </div>
+                  <div id="invalidEmailModif" class="invalid-feedback" style="display:none">
+                    <strong>Ups!</strong> Por favor, ingrese una dirección de Email válida.
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="LinkedInModif">LinkedIn</label>
+                  <input type="text" maxlength="60" class="form-control" id="LinkedInModif">
+                </div>
+                <div id="invalidLinkedInModif" class="invalid-feedback" style="display:none">
+                  <strong>Ups!</strong> Por favor, ingrese una dirección de LinkedIn válida.
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="GitHubModif">GitHub</label>
+                  <input type="text" maxlength="60" class="form-control" id="GitHubModif">
+                </div>
+                <div id="invalidGithubModif" class="invalid-feedback" style="display:none">
+                  <strong>Ups!</strong> Por favor, ingrese una dirección de Github válida.
+                </div>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="TeamModif">N° de Equipo</label>
+                  <input type="text" maxlength="2" class="form-control" id="TeamModif">
+                </div>
+                <br>
+              </div>
+            </div>
+
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="buttonModifCandidate">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  
+  <script src="js/jquery.letterpic.js"></script>
+
+  <script src="js/generadorAvatarEdicion.js"></script>
+  <script src="js/letterpic.js"></script>
+
+  <!-- Icons -->
+  <script src="js/feather.min.js"></script>
+
+  <!-- Graphs -->
+  <script src="js/jqBootstrapValidation.js"></script>
+
+  <script src="js/moment-with-locales.min.js"></script>
+
+  <link rel="stylesheet" href="js//jquery-ui.css">
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/datepicker-es.js"></script>
+  <!-- sweetaler-->
+  <script src="js/sweetalert2.all.min.js"></script>
+  <script src="js/edicion.js"></script>
+  <script src="js/Candidatos.js"></script>
+
+</body>
+
+</html>
